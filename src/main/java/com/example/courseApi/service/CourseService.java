@@ -5,12 +5,9 @@ import com.example.courseApi.modelEntity.Course;
 import com.example.courseApi.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-import java.net.http.HttpHeaders;
 import java.util.List;
 import java.util.Optional;
 
