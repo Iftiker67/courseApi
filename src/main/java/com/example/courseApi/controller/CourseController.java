@@ -14,7 +14,7 @@ public class CourseController {
     private CourseService courseService;
 
 //    @CrossOrigin(origins = "*", exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-//    @GetMapping("/course")
+    @GetMapping("/course")
     public List<Course> getAllCourse(){
         return this.courseService.getAllCourses();
     }
