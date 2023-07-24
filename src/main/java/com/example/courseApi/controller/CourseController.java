@@ -23,7 +23,8 @@ public class CourseController {
         HttpHeaders httpHeaders = new HttpHeaders();
         if(!this.courseService.getAllCourses().isEmpty()){
             httpHeaders.set("Get course","Found");
-            return ResponseEntity.ok(this.courseService.getAllCourses());
+//            return ResponseEntity.ok(this.courseService.getAllCourses());
+            return new ResponseEntity<>(this.courseService.getAllCourses(),httpHeaders,HttpStatus.OK);
         }
         httpHeaders.set("Get course","Not Found");
         return ResponseEntity.notFound().build();
@@ -42,14 +43,18 @@ public class CourseController {
             courseResponseEntity = new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
         else{
-            courseResponseEntity = new ResponseEntity<>(course,HttpStatus.FOUND);
+            courseResponseEntity = new ResponseEntity<>(course,HttpStatus.OK);
         }
         return courseResponseEntity;
     }
 
     @PostMapping("/course")
-    public boolean postCourse(@RequestBody com.example.courseApi.modelEntity.Course course){
-        return this.courseService.postCourse(course);
+    public ResponseEntity postCourse(@RequestBody com.example.courseApi.modelEntity.Course course){
+        boolean posted = this.courseService.postCourse(course);
+        if(posted){
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @DeleteMapping("/course/{courseid}")
@@ -66,8 +71,14 @@ public class CourseController {
     }
 
     @PutMapping("/course")
-    public boolean updateCourse(@RequestBody com.example.courseApi.modelEntity.Course course){
-        return this.courseService.updatedCourse(course);
+    public ResponseEntity updateCourse(@RequestBody com.example.courseApi.modelEntity.Course course){
+        boolean updated = this.courseService.updatedCourse(course);
+        if(updated){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
     }
 
 //    get All courses
